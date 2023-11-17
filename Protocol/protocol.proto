@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package test;
+
+message device {
+    int64 device_serial_id = 1;
+}
+
+message data {
+    device device_data  = 1;
+
+    float latitude      = 2; 
+    float longitude     = 3; 
+    float pitch         = 4; 
+    float roll          = 5; 
+    float yaw           = 6; 
+}
+
+message ping {
+    device device_data  = 1;
+
+    int64 timestamp = 2;
+}
