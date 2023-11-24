@@ -16,17 +16,19 @@ test::ping pingData;
 
 void connectToWifi()
 {
-	Serial.print("Connecting to SSID: ");
-	Serial.println(SECRET_SSID);
+	Serial.begin(9600);
+	delay(1000);
 
-	auto status = WiFi.begin(SECRET_SSID, SECRET_PASS);
+	WiFi.mode(WIFI_STA); // Optional
+	WiFi.begin(SECRET_SSID, SECRET_PASS);
+	Serial.println("\nConnecting");
 
-	Serial.print("Waiting");
-	while (status != WL_CONNECTED)
-	{
-		Serial.print(".");
-	}
-	Serial.println("You're connected to the network.");
+	while (WiFi.status() != WL_CONNECTED)
+		;
+
+	Serial.println("\nConnected to the WiFi network");
+	Serial.print("Local ESP32 IP: ");
+	Serial.println(WiFi.localIP());
 }
 
 bool pingServer()
@@ -93,6 +95,7 @@ bool pingServer()
 	}
 
 	client.stop();
+	writeBuffer.clear();
 	return result;
 }
 
@@ -108,5 +111,4 @@ void loop()
 {
 	pingServer();
 	delay(500);
-
 }

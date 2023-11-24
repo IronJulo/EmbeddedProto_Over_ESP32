@@ -17,13 +17,30 @@ protobuf.load("../Protocol/protocol.proto", function (err, root) {
 
 	// Define a route
 	app.post('/api/data', (req, res) => {
-		console.log("Data on /api/data");
-		let receive_buffer = Buffer.alloc(50000);
-
-		//let message = Data.decode(req.body);
-		console.log('req.body: ');
-		console.log(req.body);
-		res.sendStatus(200)
+		console.log("/api/data POST");
+		// An empty buffer to store the data received.
+		let receive_buffer = Buffer.alloc(0);
+	
+		req.on('data', function(chunk) {
+		  const temp = receive_buffer.slice();
+		  receive_buffer = new Buffer.concat([temp, chunk]);
+		})
+		
+		req.on('end', function() {
+		  console.log('Body: ')
+		  let data_str = ''
+		  for(let pair of receive_buffer.entries()) {
+			data_str += pair[1].toString() + ", ";
+		  }
+		  console.log(data_str);
+	
+		  let message = Data.decode(receive_buffer);
+		  console.log('Message: ');
+		  console.log(message);
+	
+		  res.writeHead(200);
+		  res.end();
+		})
 	});
 
 	// Define a route
