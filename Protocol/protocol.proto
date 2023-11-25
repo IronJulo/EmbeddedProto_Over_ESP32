@@ -6,7 +6,7 @@ message device {
     int64 device_serial_id = 1;
 }
 
-message data {
+message payload {
     device device_data  = 1;
 
     float latitude      = 2; 
@@ -18,6 +18,5 @@ message data {
 
 message ping {
     device device_data  = 1;
-
     int64 timestamp = 2;
 }
