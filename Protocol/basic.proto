@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package basic;
+
+message device {
+    int64 device_serial_id = 1;
+}
