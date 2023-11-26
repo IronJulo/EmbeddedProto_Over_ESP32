@@ -8,7 +8,7 @@ import { error } from 'console';
 const app = express();
 const port = 3000;
 
-app.use(bodyParser.raw({ type: 'application/x-protobuf' }));
+app.use(bodyParser.raw({ type: 'application/octet-stream' }));
 
 app.get('/', (req, res) => {
     res.send('Hello, Express with TypeScript!');
@@ -36,7 +36,7 @@ app.post('/api/test_device', (req, res) => {
         console.log("headerChecksum: " + headerChecksum);
 
         switch (packetType) {
-            case "1":
+            case "2":
                 const serializedPayload: Uint8Array = req.body;
                 let checksum = 0;
                 for (let index = 0; index < serializedPayload.length; index++) {
@@ -50,7 +50,10 @@ app.post('/api/test_device', (req, res) => {
                     throw error("checksum != headerChecksum");
                 }
                 const deserializedPayload = test.payload.deserializeBinary(serializedPayload);
-                console.log(deserializedPayload.toString());
+                console.log(" ");
+                console.log(" ");
+                console.log(" ");
+                console.log(deserializedPayload);
                 break;
         
             default:

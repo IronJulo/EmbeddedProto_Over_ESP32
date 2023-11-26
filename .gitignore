@@ -2,3 +2,5 @@
 ESP32_Client/src/secret.hpp
 
 express_backend/src/generated/basic.ts
+
+nest_backend/src/generated/protocol.ts
